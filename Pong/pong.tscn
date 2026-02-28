@@ -1,0 +1,110 @@
+[gd_scene format=3 uid="uid://dj4m7kypq5n2y"]
+
+[ext_resource type="PackedScene" uid="uid://i5525q80mpvy" path="res://Player/player.tscn" id="1_7awr3"]
+[ext_resource type="Script" uid="uid://t6qoxh8j3tax" path="res://Script/pong.gd" id="1_65jcq"]
+[ext_resource type="PackedScene" uid="uid://dpadoxp7jebbx" path="res://Enemy/enemy.tscn" id="2_pgmio"]
+[ext_resource type="PackedScene" uid="uid://dbd6yxvhybouf" path="res://Ball/ball.tscn" id="3_p77of"]
+[ext_resource type="Texture2D" uid="uid://cseikl6cu38ll" path="res://assets/assets/Cenario/wall-horizontal.png" id="4_pgmio"]
+[ext_resource type="Texture2D" uid="uid://c28k77erq6n88" path="res://assets/assets/Cenario/wall-vertical.png" id="5_p77of"]
+[ext_resource type="Texture2D" uid="uid://b6h0ucfao3vbd" path="res://assets/assets/Cenario/middle-line.png" id="7_j30sr"]
+[ext_resource type="FontFile" uid="uid://dyq6ptt8mb02" path="res://assets/assets/Font/alarm clock.ttf" id="8_uvh03"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p77of"]
+size = Vector2(1064, 23)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_65jcq"]
+size = Vector2(1025, 23)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j30sr"]
+size = Vector2(16, 623.71136)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uvh03"]
+size = Vector2(19, 582)
+
+[node name="Pong" type="Node2D" unique_id=77713159]
+script = ExtResource("1_65jcq")
+
+[node name="Player" parent="." unique_id=134302796 instance=ExtResource("1_7awr3")]
+position = Vector2(46, 97)
+
+[node name="Enemy" parent="." unique_id=251226975 instance=ExtResource("2_pgmio")]
+position = Vector2(83, 104)
+
+[node name="Ball" parent="." unique_id=1928202703 instance=ExtResource("3_p77of")]
+position = Vector2(-23, 92)
+
+[node name="TopWall" type="StaticBody2D" parent="." unique_id=187450261]
+
+[node name="Sprite2D" type="Sprite2D" parent="TopWall" unique_id=648494279]
+position = Vector2(526.5, 14)
+scale = Vector2(0.83922553, 1)
+texture = ExtResource("4_pgmio")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TopWall" unique_id=1329393645]
+visible = false
+position = Vector2(522, 16.5)
+shape = SubResource("RectangleShape2D_p77of")
+
+[node name="BottonWall" type="StaticBody2D" parent="." unique_id=1168708270]
+
+[node name="Sprite2D" type="Sprite2D" parent="BottonWall" unique_id=2029969281]
+position = Vector2(527.5, 642)
+scale = Vector2(0.8409091, 1)
+texture = ExtResource("4_pgmio")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BottonWall" unique_id=2084377514]
+visible = false
+position = Vector2(540.5, 644.5)
+shape = SubResource("RectangleShape2D_65jcq")
+
+[node name="GoalLeft" type="Area2D" parent="." unique_id=1438963780]
+
+[node name="Sprite2D" type="Sprite2D" parent="GoalLeft" unique_id=185312628]
+position = Vector2(16, 328)
+scale = Vector2(1, 0.9651899)
+texture = ExtResource("5_p77of")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GoalLeft" unique_id=89480981]
+visible = false
+position = Vector2(17, 326.0001)
+scale = Vector2(1, 0.9651899)
+shape = SubResource("RectangleShape2D_j30sr")
+
+[node name="GoaLRight" type="Area2D" parent="." unique_id=871698532]
+
+[node name="Sprite2D" type="Sprite2D" parent="GoaLRight" unique_id=260079602]
+position = Vector2(1036, 333)
+scale = Vector2(1, 0.971519)
+texture = ExtResource("5_p77of")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GoaLRight" unique_id=1141538967]
+visible = false
+position = Vector2(1035.5, 327)
+shape = SubResource("RectangleShape2D_uvh03")
+
+[node name="MiddleLine" type="Sprite2D" parent="." unique_id=359980467]
+position = Vector2(509, 324)
+texture = ExtResource("7_j30sr")
+
+[node name="PlayerScore" type="Label" parent="." unique_id=879743208]
+offset_left = 427.0
+offset_top = 49.0
+offset_right = 469.0
+offset_bottom = 72.0
+theme_override_fonts/font = ExtResource("8_uvh03")
+theme_override_font_sizes/font_size = 43
+text = "0"
+horizontal_alignment = 1
+
+[node name="EnemyScore" type="Label" parent="." unique_id=924000521]
+offset_left = 572.0
+offset_top = 51.0
+offset_right = 612.0
+offset_bottom = 74.0
+theme_override_fonts/font = ExtResource("8_uvh03")
+theme_override_font_sizes/font_size = 44
+text = "0"
+horizontal_alignment = 1
+
+[connection signal="body_entered" from="GoalLeft" to="." method="_on_goal_left_body_entered"]
+[connection signal="body_entered" from="GoaLRight" to="." method="_on_goa_l_right_body_entered"]
